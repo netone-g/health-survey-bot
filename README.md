@@ -36,14 +36,14 @@ nvm use --lts
 node -v
 ```
 
-### Serverles Framework Install
+### Serverless Framework Install
 ```sh
 npm install -g serverless
 ```
 
 ### Registering credentials for AWS
 ```sh
-serverless config credentials --provider aws --key <IAMUSERACESSKEY> --secret <IAMUSERSECRET>
+serverless config credentials --provider aws --key <IAMUSERACCESSKEY> --secret <IAMUSERSECRET>
 # Confirm
 cat ~/.aws/credentials
 ```
