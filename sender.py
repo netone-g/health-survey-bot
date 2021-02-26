@@ -75,7 +75,7 @@ def clean_dynamodb_table(tablename: str, bucketname: str):
 
 
 def post_attachements_to_teams(target: str, markdown: str, attachments: str):
-    url = "https://api.ciscospark.com/v1/messages"
+    url = "https://webexapis.com/v1/messages"
     headers = {
         "Content-Type": "application/json; charset=UTF-8",
         "Authorization": "Bearer " + os.environ["CiscoTeamsAccessToken"]

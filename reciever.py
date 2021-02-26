@@ -53,7 +53,7 @@ def lambda_handler(event, context):
 
 
 def get_person_details_from_webexteams(id: str):
-    url = "https://api.ciscospark.com/v1/people/" + id
+    url = "https://webexapis.com/v1/people/" + id
     req = urllib.request.Request(url, data={}, method="GET", headers=headers)
     with urllib.request.urlopen(req) as f:
         result = json.load(f)
@@ -62,14 +62,14 @@ def get_person_details_from_webexteams(id: str):
 
 
 def delete_message_from_webexteams(id: str):
-    url = "https://api.ciscospark.com/v1/messages/" + id
+    url = "https://webexapis.com/v1/messages/" + id
     req = urllib.request.Request(url, method="DELETE", headers=headers)
     urllib.request.urlopen(req)
     return
 
 
 def send_message_to_webexteams(personEmail: str, markdown: str):
-    url = "https://api.ciscospark.com/v1/messages/"
+    url = "https://webexapis.com/v1/messages/"
     data = {
         "toPersonEmail": personEmail,
         "markdown": markdown
@@ -81,7 +81,7 @@ def send_message_to_webexteams(personEmail: str, markdown: str):
 
 
 def get_attachment_action_details(id: str):
-    url = "https://api.ciscospark.com/v1/attachment/actions/" + id
+    url = "https://webexapis.com/v1/attachment/actions/" + id
 
     req = urllib.request.Request(url, data={}, method="GET", headers=headers)
     with urllib.request.urlopen(req) as f:

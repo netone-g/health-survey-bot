@@ -122,7 +122,7 @@ def lambda_handler(event, context):
 
 
 def get_message_from_webexteams(id: str):
-    ciscourl = "https://api.ciscospark.com/v1/messages/" + id
+    ciscourl = "https://webexapis.com/v1/messages/" + id
 
     req = urllib.request.Request(ciscourl, data={}, method="GET", headers=headers)
     result = json.load(urllib.request.urlopen(req))
@@ -139,7 +139,7 @@ def read_dynamodb_all():
 
 
 def send_message_to_webexteams(personEmail: str, markdown: str):
-    url = "https://api.ciscospark.com/v1/messages/"
+    url = "https://webexapis.com/v1/messages/"
     data = {
         "toPersonEmail": personEmail,
         "markdown": markdown
@@ -151,7 +151,7 @@ def send_message_to_webexteams(personEmail: str, markdown: str):
 
 def convert_emails_to_display_names(emails: list):
     def _get(email):
-        ciscourl = "https://api.ciscospark.com/v1/people/?email=" + email
+        ciscourl = "https://webexapis.com/v1/people/?email=" + email
         req = urllib.request.Request(ciscourl, method="GET", headers=headers)
         r = json.load(urllib.request.urlopen(req))
         if len(r['items']) > 0:
