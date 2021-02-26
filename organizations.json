@@ -1,0 +1,25 @@
+[
+    {
+        "name": "OrgA",
+        "admins": [
+            "a-admin@netone.local",
+            "admin@netone.local"
+        ],
+        "users": [
+            "a-user1@netone.local",
+            "a-user2@netone.local",
+            "a-user3@netone.local"
+        ]
+    },
+    {
+        "name": "OrgB",
+        "admins": [
+            "b-admin@netone.local"
+        ],
+        "users": [
+            "b-user1@netone.local",
+            "b-user2@netone.local",
+            "b-user3@netone.local"
+        ]
+    }
+]
