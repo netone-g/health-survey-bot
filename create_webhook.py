@@ -31,7 +31,7 @@ def lambda_handler(event, context):
 
 
 def _create_webhook(target_url, data, headers):
-    url = "https://api.ciscospark.com/v1/webhooks"
+    url = "https://webexapis.com/v1/webhooks"
     req = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), method="POST", headers=headers)
     with urllib.request.urlopen(req) as f:
         result = json.load(f)
@@ -61,7 +61,7 @@ def create_message_webhook(target_url):
 
 
 def get_webhooks():
-    url = "https://api.ciscospark.com/v1/webhooks"
+    url = "https://webexapis.com/v1/webhooks"
 
     req = urllib.request.Request(url, method="GET", headers=headers)
     with urllib.request.urlopen(req) as f:
@@ -70,7 +70,7 @@ def get_webhooks():
 
 
 def delete_webhook(id):
-    url = "https://api.ciscospark.com/v1/webhooks/" + id
+    url = "https://webexapis.com/v1/webhooks/" + id
 
     req = urllib.request.Request(url, method="DELETE", headers=headers)
     return urllib.request.urlopen(req)
