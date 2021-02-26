@@ -7,7 +7,7 @@ Public Cloud Provider: AWS
 Function Runtime: Python3.8
 
 ## Install
-### Webex Teams Bot preparation
+### Prepare Webex Teams Bot
 1. Create a bot according to the official documentation.  
 https://developer.webex.com/docs/bots  
 1. Make a note of the access token of the created bot.

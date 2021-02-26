@@ -55,7 +55,7 @@ provider:
             ]
   # you can define service wide environment variables here
   environment:
-    CiscoTeamsAccessToken: <Webex Teams Botのアクセストークン>
+    CiscoTeamsAccessToken: <Webex Teams Bot ACCESSTOKEN>
     LOG_LEVEL: INFO
     DYNAMODB_TABLENAME: ${self:service}-${self:provider.stage}
     S3_BUCKETNAME: ${self:service}-${self:provider.stage}
@@ -83,7 +83,7 @@ functions:
   sender:
     handler: sender.lambda_handler
     events:
-      # TZ +0900を考慮して-9時間で設定する
+      # Set in -9 hours considering TZ +0900
       - schedule: cron(0 0 ? * MON,TUE,WED,FRI *)
     package:
       include:
