@@ -98,36 +98,36 @@ configuration file for the question form sent to the recipient. You can change t
 Defaults are as follows: 
 ```json
 {
-    "title": "COVID-19 Measures Health Survey",
-    "description":"It is request from the COVID-19 Countermeasures Headquarters. Please answer the following questions to ensure your safety.",
-    "questions": [
-        {
-            "title": "Please let us know your current physical condition*",
-            "choices": [
-                {
-                    "title": "Good",
-                    "value": "false"
-                },
-                {
-                    "title": "Poor physical condition",
-                    "value": "true"
-                }
-            ]
-        },
-        {
-            "title": "Please let us know about the physical condition of your roommate*",
-            "choices": [
-                {
-                    "title": "All good",
-                    "value": "false"
-                },
-                {
-                    "title": "Some people are poor condition",
-                    "value": "true"
-                }
-            ]
-        }
-    ]
+    "title": "COVID-19 Measures Health Survey",
+    "description":"It is request from the COVID-19 Countermeasures Headquarters. Please answer the following questions to ensure your safety.",
+    "questions": [
+        {
+            "title": "Please let us know your current physical condition*",
+            "choices": [
+                {
+                     "title": "Good",
+                    "value": "false"
+                },
+                {
+                    "title": "Poor physical condition",
+                    "value": "true"
+                }
+            ]
+        },
+        {
+            "title": "Please let us know about the physical condition of your roommate*",
+            "choices": [
+                {
+                    "title": "All good",
+                    "value": "false"
+                },
+                {
+                    "title": "Some people are poor condition",
+                    "value": "true"
+                }
+            ]
+        }
+    ]
 }
 ```
 
