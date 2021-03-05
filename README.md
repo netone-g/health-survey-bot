@@ -136,7 +136,7 @@ Defaults are as follows: 
 For 'name' attribute, specify the organization name in string format. 
 For 'users' lists, specify the emails for Webex Teams  accounts to which the form is submitted in list format who receive the survey card. For 'admins' lists, specify the emails for Webex Teams  accounts who have the permission to view the response results of their organizations.
 You can add the above sets of attributes in dictionary format as many as you need.
-** In order to run this application, you need to add one or more existing Webex accounts to the 'users' list. **
+**In order to run this application, you need to add one or more existing Webex accounts to the 'users' list.**
 ```json
 [
     {
