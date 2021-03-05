@@ -7,6 +7,9 @@ Public Cloud Provider: AWS
 Function Runtime: Python3.8
 
 ## Features
+![health-survey-architecture](https://user-images.githubusercontent.com/61033769/110115807-f541f000-7df9-11eb-818a-a68916d581ec.PNG)
+![health-survey-card](https://user-images.githubusercontent.com/61033769/110115828-fa9f3a80-7df9-11eb-8afa-7a8ccfcb6186.png)
+
 - A card is sent once a day.
 - Administrators can check the response status.
 
