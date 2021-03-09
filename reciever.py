@@ -3,7 +3,7 @@ import boto3
 import json
 import logging
 
-# For Cisco teams
+# For Cisco Webex
 import urllib.request
 import urllib.parse
 import os
@@ -14,7 +14,7 @@ logger.setLevel(os.environ['LOG_LEVEL'])
 
 headers = {
     "Content-Type": "application/json; charset=UTF-8",
-    "Authorization": "Bearer " + os.environ["CiscoTeamsAccessToken"]
+    "Authorization": "Bearer " + os.environ["CISCO_WEBEX_ACCESS_TOKEN"]
 }
 
 
@@ -26,7 +26,7 @@ def lambda_handler(event, context):
     logging.info("data: {}".format(json.dumps(data, indent=4, ensure_ascii=False)))
     # Get Attachment Action Details
     attachment_action = get_attachment_action_details(data['id'])
-    user = get_person_details_from_webexteams(data['personId'])
+    user = get_person_details_from_webex(data['personId'])
     logging.info("attachment_action: {}".format(json.dumps(attachment_action, indent=4, ensure_ascii=False)))
 
     # Prepare data
@@ -43,8 +43,8 @@ def lambda_handler(event, context):
 
     # Write Dynamo DB
     write_to_dynamodb_table(payload, os.environ['DYNAMODB_TABLENAME'])
-    delete_message_from_webexteams(data['messageId'])
-    send_message_to_webexteams(user['emails'][0], "The answer has been sent.  \nThank you for your cooperation.")
+    delete_message_from_webex(data['messageId'])
+    send_message_to_webex(user['emails'][0], "The answer has been sent.  \nThank you for your cooperation.")
 
     return {
         'statusCode': 200,
@@ -52,7 +52,7 @@ def lambda_handler(event, context):
     }
 
 
-def get_person_details_from_webexteams(id: str):
+def get_person_details_from_webex(id: str):
     url = "https://webexapis.com/v1/people/" + id
     req = urllib.request.Request(url, data={}, method="GET", headers=headers)
     with urllib.request.urlopen(req) as f:
@@ -61,14 +61,14 @@ def get_person_details_from_webexteams(id: str):
     return result
 
 
-def delete_message_from_webexteams(id: str):
+def delete_message_from_webex(id: str):
     url = "https://webexapis.com/v1/messages/" + id
     req = urllib.request.Request(url, method="DELETE", headers=headers)
     urllib.request.urlopen(req)
     return
 
 
-def send_message_to_webexteams(personEmail: str, markdown: str):
+def send_message_to_webex(personEmail: str, markdown: str):
     url = "https://webexapis.com/v1/messages/"
     data = {
         "toPersonEmail": personEmail,

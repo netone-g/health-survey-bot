@@ -24,6 +24,8 @@ provider:
   name: aws
   runtime: python3.8
   lambdaHashingVersion: 20201221
+  apiGateway:
+    shouldStartNameWithService: true
   # you can overwrite defaults here
   #  stage: dev
   #  region: us-east-1
@@ -32,7 +34,9 @@ provider:
   timeout: 300
 
   # you can add statements to the Lambda function's IAM Role here
-  iamRoleStatements:
+  iam:
+    role:
+      statements:
     - Effect: "Allow"
       Action:
         - "s3:*"
@@ -55,11 +59,18 @@ provider:
             ]
   # you can define service wide environment variables here
   environment:
-    CiscoTeamsAccessToken: <Webex Teams Bot ACCESSTOKEN>
+    # An access token for Cisco Webex Bot that submits a health survey confirmation form.
+    CISCO_WEBEX_ACCESS_TOKEN: <Webex Bot access token>
+    # S3 bucket name to save past answer results
+    S3_BUCKETNAME: <BUCKETNAME>
+
+    # DynamoDB table name to save answer results (default is service name)
+    DYNAMODB_TABLENAME:  ${self:service}-${self:provider.stage}
+    # TimeZone
+    TZ: 'UTC'
+    # logging level
     LOG_LEVEL: INFO
-    DYNAMODB_TABLENAME: ${self:service}-${self:provider.stage}
-    S3_BUCKETNAME: ${self:service}-${self:provider.stage}
-    TZ: "Asia/Tokyo"
+
     AWS_API_GATEWAY_ROOT_URL:
       {
         "Fn::Join":
@@ -84,7 +95,7 @@ functions:
     handler: sender.lambda_handler
     events:
       # Set in -9 hours considering TZ +0900
-      - schedule: cron(0 0 ? * MON,TUE,WED,FRI *)
+      - schedule: cron(0 0 ? * * *)
     package:
       include:
         - sender.py
@@ -107,7 +118,7 @@ functions:
       - http:
           path: check
           method: post
-      - schedule: cron(0 3 ? * MON,TUE,WED,FRI *)
+      - schedule: cron(0 3 ? * * *)
     package:
       include:
         - status.py
@@ -125,14 +136,14 @@ resources:
   Resources:
     Bucket:
       Type: AWS::S3::Bucket
-      DeletionPolicy: Retain
-      UpdateReplacePolicy: Retain
+      DeletionPolicy: Delete
+      UpdateReplacePolicy: Delete
       Properties:
         BucketName: ${self:provider.environment.S3_BUCKETNAME}
     Table:
       Type: AWS::DynamoDB::Table
-      DeletionPolicy: Retain
-      UpdateReplacePolicy: Retain
+      DeletionPolicy: Delete
+      UpdateReplacePolicy: Delete
       Properties:
         TableName: ${self:provider.environment.DYNAMODB_TABLENAME}
         AttributeDefinitions:

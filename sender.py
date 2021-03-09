@@ -30,7 +30,7 @@ def lambda_handler(event, context):
         for o in organizations:
             for email in o["users"]:
                 try:
-                    result = post_attachements_to_teams(email, card_settings['title'], attachments)
+                    result = post_attachements_to_webex(email, card_settings['title'], attachments)
                 except urllib.error.HTTPError as e:
                     error = json.loads(e.read())
                     logger.warning("Send a message to webex error: email={} code={} message={}".format(email, e.code, error["message"]))
@@ -45,7 +45,7 @@ def lambda_handler(event, context):
         logger.info("email: {}".format(email))
         attachments = create_attachements(card_settings)
         try:
-            result = post_attachements_to_teams(email, card_settings['title'], attachments)
+            result = post_attachements_to_webex(email, card_settings['title'], attachments)
         except urllib.error.HTTPError as e:
             error = json.loads(e.read())
             logger.warning("Send a message to webex error: email={} code={} message={}".format(email, e.code, error["message"]))
@@ -74,11 +74,11 @@ def clean_dynamodb_table(tablename: str, bucketname: str):
     return
 
 
-def post_attachements_to_teams(target: str, markdown: str, attachments: str):
+def post_attachements_to_webex(target: str, markdown: str, attachments: str):
     url = "https://webexapis.com/v1/messages"
     headers = {
         "Content-Type": "application/json; charset=UTF-8",
-        "Authorization": "Bearer " + os.environ["CiscoTeamsAccessToken"]
+        "Authorization": "Bearer " + os.environ["CISCO_WEBEX_ACCESS_TOKEN"]
     }
     data = {
         "toPersonEmail": target,
@@ -104,7 +104,7 @@ def create_attachements(card_settings):
         {
             "type": "TextBlock",
             "weight": "bolder",
-            "text": datetime.now().strftime("%Y%-m%-d")
+            "text": datetime.now().strftime("%a, %d %b %Y")
         },
         {
             "type": "TextBlock",
@@ -118,7 +118,8 @@ def create_attachements(card_settings):
         body.extend([
             {
                 "type": "TextBlock",
-                "text": q['title']
+                "text": q['title'],
+                "wrap": True
             },
             {
                 "type": "Input.ChoiceSet",

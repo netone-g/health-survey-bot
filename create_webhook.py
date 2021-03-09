@@ -9,7 +9,7 @@ logger.setLevel(os.environ['LOG_LEVEL'])
 
 headers = {
     "Content-Type": "application/json; charset=UTF-8",
-    "Authorization": "Bearer " + os.environ["CiscoTeamsAccessToken"]
+    "Authorization": "Bearer " + os.environ["CISCO_WEBEX_ACCESS_TOKEN"]
 }
 
 
@@ -19,7 +19,8 @@ def lambda_handler(event, context):
     for webhook in webhooks:
         delete_webhook(webhook["id"])
         logger.info("Webhook successfully deleted: {}".format(webhook["id"]))
-
+    if event and event.get("delete"):
+        return []
     results = []
     result = create_attachment_actions_webhook(os.environ['AWS_API_GATEWAY_ROOT_URL'] + "survey")
     logger.info("Webhook successfully registered: {}".format(json.dumps(result, indent=4, ensure_ascii=False)))
